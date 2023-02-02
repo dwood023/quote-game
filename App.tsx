@@ -44,14 +44,15 @@ const Quote = styled.View`
   padding-bottom: 15px;
 `;
 
-const Text = styled.Text`
-  font-family: Inter-Regular;
+const Text = styled.Text<{ bold?: boolean }>`
+  font-family: ${(props) => (props.bold ? "Inter-Bold" : "Inter-Regular")};
   font-size: 23px;
   font-style: italic;
 `;
 
-const Author = styled(Text)`
-  font-family: Inter-Bold;
+const Author = styled(Text).attrs({
+  bold: true,
+})`
   text-align: right;
   font-style: italic;
   padding-top: 20px;
@@ -62,6 +63,8 @@ export default function App() {
   const info = () => {};
 
   const options = ["perverse", "high", "poor"];
+
+  const quote = "Men of perverse opinion do not know the excellence of what is in their hands, till someone dash it from them.";
 
   // TODO: Derive from state of scroll view
   const selected = "perverse";
@@ -76,14 +79,31 @@ export default function App() {
       <Phone>
         <Options>
           {options.map((option) => (
-            <Option selected={option === selected}>{option}</Option>
+            <Option key={option} selected={option === selected}>
+              {option}
+            </Option>
           ))}
         </Options>
 
         <Quote>
           <Text>
-            Men of perverse opinion do not know the excellence of what is in
-            their hands, till someone dash it from them.
+            {quote
+              .split(/(\w+)/)
+              .map((word, index) => (
+                <Text
+                  key={index}
+                  /* 
+                    WARN: This is a naive method of highlighting the selected word.
+                    If the selected word occurs more than once, it will fail. In
+                    that case, we would need to represent the selected word in
+                    terms of its position as well as content. Maybe a slice (N, M)
+                    or a number indicating the Nth instance, etc.
+                   */
+                  bold={word === selected}
+                >
+                  {word}
+                </Text>
+              ))}
           </Text>
           <Author>Sophocles</Author>
         </Quote>
