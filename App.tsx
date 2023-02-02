@@ -17,8 +17,8 @@ const Wrapper = styled.View`
 
 const Phone = styled.View`
   width: 500px;
-  border-width: 1;
-  aspect-ratio: 9 / 16;
+  border-width: 1px;
+  aspect-ratio: ${9 / 16};
   justify-content: space-between;
   padding: 35px;
 `;
@@ -26,7 +26,7 @@ const Phone = styled.View`
 const Options = styled.View``;
 const Option = styled.Text<{ selected?: boolean }>`
   font-family: Inter-Bold;
-  font-size: ${(props) => (props.selected ? 30 : 22)};
+  font-size: ${(props) => (props.selected ? 30 : 22)}px;
 
   opacity: ${(props) => (props.selected ? 1 : 0.2)};
 
